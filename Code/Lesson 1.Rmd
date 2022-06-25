@@ -13,7 +13,7 @@ Rmarkdown is a valuable tool to organize code, comments, and output for communic
 
 Here we will walk through the basics of Rmarkdown. A helpful quick references is available in Rstudio `Help > Markdown Quick Reference`:
 
-![](Help.PNG)
+![](../Images/Help.PNG)
 
 A more detailed reference is available at the [rmarkdown cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/).
 
@@ -22,9 +22,7 @@ A more detailed reference is available at the [rmarkdown cookbook](https://bookd
 Load lesson 1 data from github
 
 ```{r}
-Lnk <-"https://github.com/mbtoomey/BIOL7263/blob/main/Lesson%201/Data/yeast.Rdata?raw=true"
-download.file(Lnk, "yeast.Rdata", mode = "wb")
-load("yeast.Rdata")
+load("../Data/yeast.Rdata")
 ```
 
 

@@ -1,0 +1,94 @@
+---
+title: "Lesson 1"
+author: "M. Toomey"
+date: '2022-06-19'
+output: 
+  html_document: 
+    number_sections: true
+---
+
+# Introduction
+
+Rmarkdown is a valuable tool to organize code, comments, and output for communication and archiving. I encourage you to use this format to work through our lessons and take notes. 
+
+Here we will walk through the basics of Rmarkdown. A helpful quick references is available in Rstudio `Help > Markdown Quick Reference`:
+
+![](Help.PNG)
+
+A more detailed reference is available at the [rmarkdown cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/).
+
+## Load data
+
+Load lesson 1 data from github
+
+```{r}
+Lnk <-"https://github.com/mbtoomey/BIOL7263/blob/main/Lesson%201/Data/yeast.Rdata?raw=true"
+download.file(Lnk, "yeast.Rdata", mode = "wb")
+load("yeast.Rdata")
+```
+
+
+This will load a dataframe called **yeast** that is taken from figure 2 of:
+
+Shen, X., S. Song, C. Li, and J. Zhang (2022). Synonymous mutations in representative yeast genes are mostly strongly non-neutral. Nature:1–7.
+
+We can peek at the data with `head(yeast)`. 
+
+```{r}
+head(yeast)
+```
+
+## Explore the data
+
+We can begin to work with the dataset. Lets calculated a mean of fitness 
+
+```{r}
+mean(yeast$Fitness)
+```
+
+This fails because the data type of Fitness was classified as character. Let's fix this. 
+
+```{r}
+yeast$Fitness<-as.numeric(yeast$Fitness)
+```
+
+Let's try agian
+
+```{r}
+mean(yeast$Fitness)
+```
+
+There are missing vaues in the dataset (NAs) that R doesn't know what to do with. Let's get rid of those for now. (Note this might not always be a wise approach!!)
+
+```{r}
+yeast<-na.omit(yeast)
+```
+
+Third time is a charm?
+
+```{r}
+mean(yeast$Fitness)
+```
+Notice that the results are given immediately after the code block. 
+
+With Rmarkdown you can also integrate results into you text. For example, we can add the mean of fitness directly to the text by putting in the inline command "r mean(fitness)" surrounded by ` 
+
+The mean fitness across all mutant genotypes was **`r mean(yeast$Fitness)`**. 
+
+What is cool about this is that this dynamic and is recaculated everytime you "Knit" the markdown. If there are changes to the dataset, they will be incorporated here. 
+
+Rmarkdown also allows you include data plots
+
+```{r}
+boxplot(yeast$Fitness ~ yeast$Mutation_type)
+```
+
+What if we want to show the plot, but do not want the reader to see the code? 
+
+We can add `echo = FALSE` option to the r call
+
+```{r echo = FALSE}
+boxplot(yeast$Fitness ~ yeast$Mutation_type)
+```
+
+
